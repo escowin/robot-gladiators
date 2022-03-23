@@ -1,4 +1,4 @@
-// redux | module 03: javascript, robot gladiators
+window.alert('this is an alert. javascript is running');
 
 // 1. prompt player for robot name
 
