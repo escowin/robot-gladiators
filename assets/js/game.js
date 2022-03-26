@@ -1,5 +1,18 @@
-window.alert('this is an alert. javascript is running');
+// function fight() {
+//   window.alert('the fight has begun.');
+// }
 
+// var playerName = window.prompt('what is your robots name?');
+// console.log(playerName);
+
+var name = "edwin";
+console.log(name);
+
+
+// var initials = window.prompt('your initials?');
+// console.log(initials)
+
+// fight();
 // 1. prompt player for robot name
 
 // 2. starting stats (player):
