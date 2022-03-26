@@ -1,18 +1,31 @@
-// function fight() {
-//   window.alert('the fight has begun.');
-// }
+var playerName = window.prompt('what is your robot name?');
+var playerHealth = 100;
+var playerAttack = 10;
 
-// var playerName = window.prompt('what is your robots name?');
-// console.log(playerName);
+var enemyName = 'Roborto'
+var enemyHealth = 50;
+var enemyAttack = 12;
 
-var name = "edwin";
-console.log(name);
+var fight = function() {
+  window.alert('welcome to robot gladiators');
 
+  enemyHealth = enemyHealth - playerAttack;
+  console.log(
+    playerName + " attacked " + enemyName + ". " + enemyName + " now has " + enemyHealth + " health."
+  );
+
+  playerHealth = playerHealth - enemyAttack;
+  console.log(
+    enemyName + " attacked " + playerName + ". " + playerName + " now has " + playerHealth + " health."
+  )
+};
+
+fight()
 
 // var initials = window.prompt('your initials?');
 // console.log(initials)
 
-// fight();
+
 // 1. prompt player for robot name
 
 // 2. starting stats (player):
