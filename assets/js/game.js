@@ -11,33 +11,33 @@ var fight = function() {
 
   enemyHealth = enemyHealth - playerAttack;
   console.log(
-    playerName + " attacked " + enemyName + ". " + enemyName + " now has " + enemyHealth + " health."
+    playerName + " attacked " + enemyName + ". " + enemyName + " now has " + enemyHealth + " hp."
   );
+
+  if (enemyHealth <= 0) {
+    window.alert(enemyName + " has died.");
+  } else {
+    window.alert(enemyName + " still has " + enemyHealth + " hp.");
+  }
+
 
   playerHealth = playerHealth - enemyAttack;
   console.log(
-    enemyName + " attacked " + playerName + ". " + playerName + " now has " + playerHealth + " health."
-  )
+    enemyName + " attacked " + playerName + ". " + playerName + " now has " + playerHealth + " hp."
+  );
+  if (playerHealth <= 0) {
+    window.alert(playerName + " has died.");
+  } else {
+    window.alert(playerName + " still has " + playerHealth + " hp.");
+  }
 };
 
 fight()
 
+
+
 // var initials = window.prompt('your initials?');
 // console.log(initials)
-
-
-// 1. prompt player for robot name
-
-// 2. starting stats (player):
-  // 100 HP
-  // 10 AP
-  // 10 money points
-
-// 3. starting stats (cpu, roborto):
-  // 50 hp
-  // 12 ap
-
-// 4. game displays 'welcome to robot gladiators'
 
 // 5. game prompts player to choose either fight or skip round
 
