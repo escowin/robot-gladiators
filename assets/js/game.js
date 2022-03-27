@@ -8,36 +8,38 @@ var enemyAttack = 12;
 
 var fight = function() {
   window.alert('welcome to robot gladiators');
+  var promptFight = window.prompt('would you like to FIGHT or SKIP this battle?');
+  if (promptFight === 'fight' || promptFight === 'FIGHT') {
+    enemyHealth = enemyHealth - playerAttack;
+    console.log(
+      playerName + ' attacked ' + enemyName + '. ' + enemyName + ' now has ' + enemyHealth + ' hp.'
+    );
+  
+    if (enemyHealth <= 0) {
+      window.alert(enemyName + ' has died.');
+    } else {
+      window.alert(enemyName + ' still has ' + enemyHealth + ' hp left.');
+    }
 
-  enemyHealth = enemyHealth - playerAttack;
-  console.log(
-    playerName + " attacked " + enemyName + ". " + enemyName + " now has " + enemyHealth + " hp."
-  );
+    playerHealth = playerHealth - enemyAttack;
+    console.log(
+      enemyName + ' attacked ' + playerName + '. ' + playerName + ' now has ' + playerHealth + ' hp.'
+    );
 
-  if (enemyHealth <= 0) {
-    window.alert(enemyName + " has died.");
+    if (playerHealth <= 0) {
+      window.alert(playerName + ' has died.');
+    } else {
+      window.alert(playerName + ' still has ' + playerHealth + ' hp left.');
+    }
+  } else if (promptFight === 'skip' || promptFight === 'SKIP') {
+    window.alert(playerName + ' has chosen to skip the fight.');
   } else {
-    window.alert(enemyName + " still has " + enemyHealth + " hp.");
-  }
-
-
-  playerHealth = playerHealth - enemyAttack;
-  console.log(
-    enemyName + " attacked " + playerName + ". " + playerName + " now has " + playerHealth + " hp."
-  );
-  if (playerHealth <= 0) {
-    window.alert(playerName + " has died.");
-  } else {
-    window.alert(playerName + " still has " + playerHealth + " hp.");
+    window.alert('you need to chose a valid option.');
   }
 };
 
 fight()
 
-
-
-// var initials = window.prompt('your initials?');
-// console.log(initials)
 
 // 5. game prompts player to choose either fight or skip round
 
