@@ -83,6 +83,15 @@ var startGame = function() {
       var pickedEnemyName = enemyNames[i];
       enemyHealth = 50;
       fight(pickedEnemyName);
+      // if not at the last enemy in array & still alive
+      if (playerHealth > 0 && i < enemyNames.length - 1) {
+        // asks if player wants to use store before next round
+        var storeConfirm = window.confirm("the fight is over, visit the store before next round?");
+        // if yes, go to store()
+        if (storeConfirm) {
+          shop();
+        }
+      }
     } else {
       window.alert('you have lost your robot in battle. game over.');
       break;
@@ -108,6 +117,54 @@ var endGame = function() {
     startGame();
   } else {
     window.alert("thank you for playing robot gladiators. come back soon.");
+  }
+};
+
+// shop
+var shop = function() {
+  // asks player what they'd like to do
+  var shopOptionPrompt = window.prompt(
+    "would you like to REFILL health, UPGRADE attack, or LEAVE store?"
+  );
+
+  // using switch to carry out actions
+  switch (shopOptionPrompt) {
+    case "REFILL":
+    case "refill":
+      if (playerMoney >= 7) {
+        window.alert("refill HP by 20 for $7");
+        // +HP, -$$
+        playerHealth = playerHealth + 20;
+        playerMoney = playerMoney -7;
+      } else {
+        window.alert("not enough money");
+      }
+      break;
+
+    case "UPGRADE":
+    case "upgrade":
+      if (playerMoney >= 7) {
+        window.alert("upgrade AP by 6 for $7");
+        // +AP, -$$
+        playerAttack = playerAttack + 6;
+        playerMoney = playerMoney -7;
+      } else {
+        window.alert("not enough money");
+      }
+      break;
+
+    case "LEAVE":
+    case "leave":
+      window.alert("leaving store");
+      
+      // do nothing, function ends
+      break;
+    default:
+      window.alert("did not pick valid option. try again");
+
+      // call shop() again, forces player to pick valid option
+      shop();
+      break;
   }
 };
 
