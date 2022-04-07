@@ -1,11 +1,11 @@
 var playerName = window.prompt("What is your robot's name?");
-var playerHealth = 100;
+var playerHealth = 10;
 var playerAttack = 10;
 var playerMoney = 10;
 
 var enemyNames = ['Roborto', 'Amy Android', 'Robo Trumble'];
 var enemyHealth = 50;
-var enemyAttack = 12;
+var enemyAttack = 72;
 
 console.log(enemyNames);
 console.log(enemyNames.length);
@@ -27,14 +27,14 @@ var fight = function(enemyName) {
       if (confirmSkip) {
         window.alert(playerName + ' has decided to skip this fight. Goodbye!');
         // subtract money from playerMoney for skipping
-        playerMoney = playerMoney - 10;
+        playerMoney = Math.max(0, playerMoney - 10);
         console.log("playerMoney", playerMoney);
         break;
       }
     }
 
     // remove enemy's health by subtracting the amount set in the playerAttack variable
-    enemyHealth = enemyHealth - playerAttack;
+    enemyHealth = Math.max(0, enemyHealth - playerAttack);
     console.log(
       playerName + ' attacked ' + enemyName + '. ' + enemyName + ' now has ' + enemyHealth + ' health remaining.'
     );
@@ -53,7 +53,7 @@ var fight = function(enemyName) {
     }
 
     // remove players's health by subtracting the amount set in the enemyAttack variable
-    playerHealth = playerHealth - enemyAttack;
+    playerHealth = Math.max(0, playerHealth - enemyAttack);
     console.log(
       enemyName + ' attacked ' + playerName + '. ' + playerName + ' now has ' + playerHealth + ' health remaining.'
     );
@@ -81,7 +81,7 @@ var startGame = function() {
       window.alert('welcome to robot gladiators. round ' + (i + 1));
 
       var pickedEnemyName = enemyNames[i];
-      enemyHealth = 50;
+      enemyHealth = randomNumber();
       fight(pickedEnemyName);
     } else {
       window.alert('you have lost your robot in battle. game over.');
@@ -111,4 +111,11 @@ var endGame = function() {
   }
 };
 
+// generates random numeric value
+var randomNumber = function() {
+  var value = Math.floor(Math.random() * 21) + 40;
+  return value;
+};
+
 startGame();
+
