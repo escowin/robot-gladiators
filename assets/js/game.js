@@ -4,7 +4,8 @@ var playerAttack = 10;
 var playerMoney = 10;
 
 var enemyNames = ['Roborto', 'Amy Android', 'Robo Trumble'];
-var enemyHealth = 50;
+var enemyHealth = Math.floor(Math.random() * 21) + 5;
+console.log("enemy has " + enemyHealth + "hp");
 var enemyAttack = 72;
 
 console.log(enemyNames);
@@ -34,7 +35,7 @@ var fight = function(enemyName) {
     }
 
     // remove enemy's health by subtracting the amount set in the playerAttack variable
-    enemyHealth = Math.max(0, enemyHealth - playerAttack);
+    enemyHealth = Math.floor(Math.random() * 21) + 40;
     console.log(
       playerName + ' attacked ' + enemyName + '. ' + enemyName + ' now has ' + enemyHealth + ' health remaining.'
     );
@@ -190,5 +191,5 @@ var randomNumber = function() {
   return value;
 };
 
-startGame();
+// startGame();
 
