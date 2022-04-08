@@ -16,7 +16,7 @@ var playerInfo = {
   }
   
 };
-console.log(playerInfo);
+console.log(playerInfo["money"]);
 
 var enemyInfo = [
   {
