@@ -4,35 +4,6 @@ var randomNumber = function(min, max) {
   return value;
 };
 
-var playerInfo = {
-  name: window.prompt("what is your robot's name?"),
-  health: 100,
-  attack: 10,
-  money: 10,
-  reset: function() {
-    this.health = 100;
-    this.money = 10;
-    this.attack = 10;
-  }
-  
-};
-console.log(playerInfo["money"]);
-
-var enemyInfo = [
-  {
-    name: "Roborto",
-    attack: randomNumber(10, 14)
-  },
-  {
-    name: "Amy Android",
-    attack: randomNumber(10, 14)
-  },
-  {
-    name: "robo trumble",
-    attack: randomNumber(10, 14)
-  }
-];
-
 // fight function (now with parameter for enemy's name)
 var fight = function(enemy) {
   console.log(enemy)
@@ -98,9 +69,7 @@ var fight = function(enemy) {
 // fight each enemy-robot by looping over them and fighting them one at a time
 var startGame = function() {
   // reset player stats
-  playerInfo.health = 100;
-  playerInfo.attack = 10;
-  playerInfo.money = 10;
+  playerInfo.reset();
 
   // fight each enemy robot by looping over them and fighting them one at a time
   for (var i = 0; i < enemyInfo.length; i++) {
@@ -209,6 +178,40 @@ var shop = function() {
       break;
   }
 };
+
+// player info
+var playerInfo = {
+  name: window.prompt("what is your robot's name?"),
+  health: 100,
+  attack: 10,
+  money: 10,
+  reset: function() {
+    this.health = 100;
+    this.money = 10;
+    this.attack = 10;
+    console.log(this);
+  }
+  
+};
+console.log(playerInfo["name"] + " has " + playerInfo["money"] + " gil.");
+
+// enemy info
+var enemyInfo = [
+  {
+    name: "Roborto",
+    attack: randomNumber(10, 14)
+  },
+  {
+    name: "Amy Android",
+    attack: randomNumber(10, 14)
+  },
+  {
+    name: "robo trumble",
+    attack: randomNumber(10, 14)
+  }
+];
+console.log(enemyInfo[0].name)
+
 
 startGame();
 
