@@ -16,7 +16,7 @@ var fight = function () {
   // var promptFight = window.prompt("SKIP or FIGHT?");
   var promptFight = "fight";
 
-  console.log("[ round 1 | fight! ]");
+  console.log("[ " + playerName + " chooses to " + promptFight + "! ]");
 
   // player chooses to FIGHT or SKIP. invalid input also adressed.
   if (promptFight === "fight" || promptFight === "FIGHT") {
@@ -55,6 +55,7 @@ var fight = function () {
     } else {
       fight();
     }
+    
   } else {
     console.log("invalid input. try again.");
   }
