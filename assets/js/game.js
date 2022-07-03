@@ -4,24 +4,36 @@
 // var playerName = window.prompt("enter bot name");
 var playerName = "Player";
 var playerHealth = 111;
-var playerAttack = 10;
+var playerAttack = 50;
 var playerMoney = 10;
 
-var enemyName = "CPU";
-var enemyHealth = 100;
-var enemyAttack = 10;
+var enemyNames = ["Roborto", "Android Amy", "Robo Trumble"];
+var enemyHealth = 20;
+var enemyAttack = 20;
 
-var fight = function () {
-  console.log("====== welcome =======");
+// var wash = function(soapType) {
+//   console.log("I wash with " + soapType);
+//  };
+//  wash("water");
+
+// game states
+// WIN.player defeats all enemy bots
+//    - fights all enemies
+//    - defeats all enemies
+// LOSE.player hp is 0 or less
+
+console.log("====== welcome =======");
+
+var fight = function (enemyName) {  
   // var promptFight = window.prompt("SKIP or FIGHT?");
   var promptFight = "fight";
 
   console.log("[ " + playerName + " chooses to " + promptFight + "! ]");
-
   // player chooses to FIGHT or SKIP. invalid input also adressed.
   if (promptFight === "fight" || promptFight === "FIGHT") {
     // player attacks
     enemyHealth = enemyHealth - playerAttack;
+    console.log("====== FIGHT! =======");
     console.log(playerName + " attacks " + enemyName + ". " + enemyName + " down to " + enemyHealth + "hp.");
 
     // checks enemy health
@@ -49,17 +61,18 @@ var fight = function () {
 
     // if yes, leave fight
     if (confirmSkip) {
-      console.log(playerName + " skips round.")
+      console.log("[ " + playerName + " skips round. ]")
       playerMoney = playerMoney - 2;
-      console.log(playerName + " has " + playerMoney + "g remaining.");
+      console.log("[ " + playerName + " has " + playerMoney + "g remaining. ]");
     } else {
       fight();
     }
-    
+
   } else {
     console.log("invalid input. try again.");
   }
 };
 
-
-fight();
+for(var i = 0; i < enemyNames.length; i++) {
+  fight(enemyNames[i]);
+}
