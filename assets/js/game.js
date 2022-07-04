@@ -22,15 +22,14 @@ var enemyAttack = 10;
 //    - defeats all enemies
 // LOSE.player hp is 0 or less
 
-console.log("====== welcome =======");
-
 var fight = function (enemyName) {  
 
   // repeat while current enemy is alive
   while(playerHealth > 0 && enemyHealth > 0) {
     // choice.fight or skip?
-    var promptFight = window.prompt("SKIP or FIGHT?");
-    // var promptFight = "skip";
+    // var promptFight = window.prompt("SKIP or FIGHT?");
+    var promptFight = "FIGHT";
+
     console.log("[  " + playerName + " chooses to " + promptFight + "  ]");
     
     if (promptFight === "skip" || promptFight === "SKIP") {
@@ -64,7 +63,7 @@ var fight = function (enemyName) {
 
     // logic.check player health
     if (playerHealth <= 0) {
-      console.log("[  " + playerName + " is dead (" + playerHealth + "hp). game over.  ]");
+      console.log(playerName + " is dead (" + playerHealth + "hp).");
       break;
     } else {
       console.log(playerName + " has " + playerHealth + "hp remaining.");
@@ -73,7 +72,21 @@ var fight = function (enemyName) {
 }; // end.fight()
 
 for(var i = 0; i < enemyNames.length; i++) {
-  var pickedEnemyName = enemyNames[i];
-  enemyHealth = 50;
-  fight(pickedEnemyName);
+  if (playerHealth > 0) {
+    console.log("====== ROBOT GLADIATORS ROUND " + ( i + 1) + " =======");
+
+    // new enemy chosen from index inside array 
+    var pickedEnemyName = enemyNames[i];
+
+    // resets enemyHealth stat before new fight
+    enemyHealth = 50;
+
+    // debugger to check whats happening step by step
+    // debugger;
+
+    // passs pickedEnemyName variable's value into fight(). it assumes value of enemyName paramater
+    fight(pickedEnemyName);
+  } else {
+    console.log("[  game over, you died ]");
+  }
 }
