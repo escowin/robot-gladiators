@@ -24,7 +24,6 @@ var enemyAttack = 10;
 // LOSE.player hp is 0 or less
 
 var fight = function (enemyName) {  
-
   // repeat while current enemy is alive
   while(playerHealth > 0 && enemyHealth > 0) {
     // choice.fight or skip?
@@ -44,43 +43,46 @@ var fight = function (enemyName) {
         console.log("[ " + playerName + " has " + playerMoney + "g remaining. ]");
         break;
       }
-    // logic.fight (default action)
-    // logic.player attacks
-    enemyHealth = enemyHealth - playerAttack;
-    console.log(playerName + " attacks " + enemyName + " w/ " + playerAttack + "ap.");
 
-    // logic.check enemy health
-    if (enemyHealth <= 0) {
-      console.log(enemyName + " is dead (" + enemyHealth + "hp).");
-      /*
-      storePrompt = window.prompt("REFILL hp, UPGRADE ap, or LEAVE store?");
-      if (storePrompt === REFILL || storePrompt === refill) {
-        playerHealth = playerHealth + playerMoney;
-        fight();
-      } else if (storePrompt === UPGRADE || storePrompt === upgrade) {
-        playerAttack = playerAttack + playerMoney;
-        fight();
+      
+      // logic.fight (default action)
+      // logic.player attacks
+      enemyHealth = enemyHealth - playerAttack;
+      console.log(playerName + " attacks " + enemyName + " w/ " + playerAttack + "ap.");
+
+        // logic.check enemy health
+      if (enemyHealth <= 0) {
+        console.log(enemyName + " is dead (" + enemyHealth + "hp).");
+        /*
+        storePrompt = window.prompt("REFILL hp, UPGRADE ap, or LEAVE store?");
+        if (storePrompt === REFILL || storePrompt === refill) {
+          playerHealth = playerHealth + playerMoney;
+          fight();
+        } else if (storePrompt === UPGRADE || storePrompt === upgrade) {
+          playerAttack = playerAttack + playerMoney;
+          fight();
+        } else {
+          fight();
+        }
+        */
+        break;
       } else {
-        fight();
+        console.log(enemyName + " has " + enemyHealth + "hp remaining.");
       }
-      */
-      break;
-    } else {
-      console.log(enemyName + " has " + enemyHealth + "hp remaining.");
-    }
-    
-    playerHealth = playerHealth - enemyAttack;
-    console.log(enemyName + " attacks " + playerName + " w/ " + enemyAttack + "ap.");
+      
+      playerHealth = playerHealth - enemyAttack;
+      console.log(enemyName + " attacks " + playerName + " w/ " + enemyAttack + "ap.");
 
-    // logic.check player health
-    if (playerHealth <= 0) {
-      console.log(playerName + " is dead (" + playerHealth + "hp).");
-      break;
-    } else {
-      console.log(playerName + " has " + playerHealth + "hp remaining.");
+      // logic.check player health
+      if (playerHealth <= 0) {
+        console.log(playerName + " is dead (" + playerHealth + "hp).");
+        break;
+      } else {
+        console.log(playerName + " has " + playerHealth + "hp remaining.");
+      }
+      // switch turn order for next round
+      isPlayerTurn = !isPlayerTurn;
     }
-    // switch turn order for next round
-    isPlayerTurn = !isPlayerTurn;
   }
 };
 
@@ -143,10 +145,10 @@ var shop = function() {
 
         playerHealth = playerHealth + 20;
         playerMoney = playerMoney - 7;
-    } else {
-      console.log("not enough g");
-    }
-    break;
+      } else {
+        console.log("not enough g");
+      }
+      break;
 
     // shopOptionPrompt.upgrade = increase ap, js math
     case "UPGRADE": 
@@ -175,4 +177,4 @@ var shop = function() {
   }
 };
 
-startGame();
+// startGame();
