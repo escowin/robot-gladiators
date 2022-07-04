@@ -3,8 +3,8 @@
 // user input
 // var playerName = window.prompt("enter bot name");
 var playerName = "Player";
-var playerHealth = 50;
-var playerAttack = 10;
+var playerHealth = 150;
+var playerAttack = 110;
 var playerMoney = 10;
 
 var enemyNames = ["Roborto", "Android Amy", "Robo Trumble"];
@@ -15,6 +15,7 @@ var enemyAttack = 10;
 //   console.log("I wash with " + soapType);
 //  };
 //  wash("water");
+// i wash with water
 
 // game states
 // WIN.player defeats all enemy bots
@@ -53,6 +54,18 @@ var fight = function (enemyName) {
     // logic.check enemy health
     if (enemyHealth <= 0) {
       console.log(enemyName + " is dead (" + enemyHealth + "hp).");
+      /*
+      storePrompt = window.prompt("REFILL hp, UPGRADE ap, or LEAVE store?");
+      if (storePrompt === REFILL || storePrompt === refill) {
+        playerHealth = playerHealth + playerMoney;
+        fight();
+      } else if (storePrompt === UPGRADE || storePrompt === upgrade) {
+        playerAttack = playerAttack + playerMoney;
+        fight();
+      } else {
+        fight();
+      }
+      */
       break;
     } else {
       console.log(enemyName + " has " + enemyHealth + "hp remaining.");
@@ -68,25 +81,49 @@ var fight = function (enemyName) {
     } else {
       console.log(playerName + " has " + playerHealth + "hp remaining.");
     }
-  } //  end.while() loop
-}; // end.fight()
-
-for(var i = 0; i < enemyNames.length; i++) {
-  if (playerHealth > 0) {
-    console.log("====== ROBOT GLADIATORS ROUND " + ( i + 1) + " =======");
-
-    // new enemy chosen from index inside array 
-    var pickedEnemyName = enemyNames[i];
-
-    // resets enemyHealth stat before new fight
-    enemyHealth = 50;
-
-    // debugger to check whats happening step by step
-    // debugger;
-
-    // passs pickedEnemyName variable's value into fight(). it assumes value of enemyName paramater
-    fight(pickedEnemyName);
-  } else {
-    console.log("[  game over, you died ]");
   }
-}
+};
+
+var startGame = function() {
+  // reset.player
+  playerHealth = 100;
+  playerAttack = 100;
+  playerMoney = 100;
+
+  for(var i = 0; i < enemyNames.length; i++) {
+    if (playerHealth > 0) {
+      console.log("====== ROBOT GLADIATORS ROUND " + ( i + 1) + " =======");
+
+      var pickedEnemyName = enemyNames[i];
+      // reset.health
+      enemyHealth = 50;
+
+      // passs pickedEnemyName variable's value into fight(). it assumes value of enemyName paramater
+      fight(pickedEnemyName);
+    } else {
+      console.log("[  game over, you died ]");
+      break;
+    }
+  }
+
+  // logic.loop(0hp || enemyNames[i]).ends, run endGame logic
+  endGame();
+};
+
+var endGame = function() {
+  if (playerHealth > 0) {
+    console.log("[  game won, score is " + playerMoney + " ]");
+  } else {
+    console.log("[  game over, you died. ]");
+  }
+
+  var playAgainConfirm = window.confirm("play agian?");
+
+  if (playAgainConfirm) {
+    startGame();
+  } else {
+    console.log("[[ game end  ]]");
+  }
+};
+
+startGame();
