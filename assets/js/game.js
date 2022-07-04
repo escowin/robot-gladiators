@@ -44,8 +44,6 @@ var fight = function (enemyName) {
         console.log("[ " + playerName + " has " + playerMoney + "g remaining. ]");
         break;
       }
-    }
-
     // logic.fight (default action)
     // logic.player attacks
     enemyHealth = enemyHealth - playerAttack;
@@ -81,6 +79,8 @@ var fight = function (enemyName) {
     } else {
       console.log(playerName + " has " + playerHealth + "hp remaining.");
     }
+    // switch turn order for next round
+    isPlayerTurn = !isPlayerTurn;
   }
 };
 
@@ -113,12 +113,8 @@ var startGame = function() {
       break;
     }
   }
-
+  
   // logic.loop(0hp || enemyNames[i]).ends, run endGame logic
-  endGame();
-};
-
-var endGame = function() {
   if (playerHealth > 0) {
     console.log("[  game won, score is " + playerMoney + " ]");
   } else {
@@ -127,7 +123,7 @@ var endGame = function() {
 
   var playAgainConfirm = window.confirm("play again?");
 
-  if (playAgainConfirm) {
+  if  (playAgainConfirm) {
     startGame();
   } else {
     console.log("[[ game end  ]]");
