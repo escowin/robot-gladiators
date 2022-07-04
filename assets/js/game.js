@@ -100,6 +100,14 @@ var startGame = function() {
 
       // passs pickedEnemyName variable's value into fight(). it assumes value of enemyName paramater
       fight(pickedEnemyName);
+      // if health above 0 && not last [array] index
+      if (playerHealth > 0 && i < enemyNames.length - 1) {
+        var storeConfirm = window.confirm("fight over, visit shop?")
+        // if yes, invoke shop();
+        if (storeConfirm) {
+          shop();
+        }
+      }
     } else {
       console.log("[  game over, you died ]");
       break;
@@ -117,12 +125,57 @@ var endGame = function() {
     console.log("[  game over, you died. ]");
   }
 
-  var playAgainConfirm = window.confirm("play agian?");
+  var playAgainConfirm = window.confirm("play again?");
 
   if (playAgainConfirm) {
     startGame();
   } else {
     console.log("[[ game end  ]]");
+  }
+};
+
+var shop = function() {
+  var shopOptionPrompt = window.prompt("REFILL hp, UPGRADE ap, or LEAVE?");
+
+  // switch case. multiple choices
+  switch (shopOptionPrompt) {
+    // shopOptionPrompt.refill = increase hp, js math
+    case "REFILL":
+    case "refill":
+      if (playerMoney >= 7) {
+        console.log("refill, -7g | " + playerHealth + "hp + 20.");
+
+        playerHealth = playerHealth + 20;
+        playerMoney = playerMoney - 7;
+    } else {
+      console.log("not enough g");
+    }
+    break;
+
+    // shopOptionPrompt.upgrade = increase ap, js math
+    case "UPGRADE": 
+    case "upgrade": 
+      if (playerMoney >= 7) {
+      console.log(
+        "UPGRADING " + playerMoney + "g -30g | " + playerAttack + "ap + 6."
+      );
+      playerAttack = playerAttack + 6;
+      playerMoney = playerMoney - 30;
+      } else {
+        console.log("not enough g");
+      }
+      break;
+
+    // shopOptionPrompt.leave = exit switch() via break;
+    case "LEAVE": 
+    case "leave":
+      console.log("leaves store() via break.")
+      break;
+    default:
+      console.log("pick valid option, try again.");
+      // calls shop(), repeating the cycle
+      shop();
+      break;
   }
 };
 
