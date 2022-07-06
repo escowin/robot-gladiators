@@ -24,8 +24,9 @@ var enemyAttack = 10;
 //    - defeats all enemies
 // LOSE.player hp is 0 or less
 
-var randomNumber = function() {
-  var value = Math.floor(Math.random() * 21) + 40;
+var randomNumber = function(min, max) {
+  var value = Math.floor(Math.random() * (max - min + 1) + min);
+  
   return value;
 };
 
@@ -54,8 +55,11 @@ var fight = function (enemyName) {
 
     // logic.fight
     // logic.player attacks
-    enemyHealth = Math.max(0, enemyHealth - playerAttack);
-    console.log(playerName + " attacks " + enemyName + " w/ " + playerAttack + "ap.");
+    var damage = randomNumber(playerAttack - 10, playerAttack);
+
+    enemyHealth = Math.max(0, enemyHealth - damage);
+
+    console.log(playerName + " attacks " + enemyName + " w/ " + damage + "ap.");
 
     // logic.check enemy health
     if (enemyHealth <= 0) {
@@ -64,9 +68,13 @@ var fight = function (enemyName) {
     } else {
       console.log(enemyName + " has " + enemyHealth + "hp remaining.");
     }
+
+    // logic.enemy attacks
+    var damage = randomNumber(enemyAttack - 5, enemyAttack);
     
-    playerHealth = Math.max(0, playerHealth - enemyAttack);
-    console.log(enemyName + " attacks " + playerName + " w/ " + enemyAttack + "ap.");
+    playerHealth = Math.max(0, playerHealth - damage);
+    
+    console.log(enemyName + " attacks " + playerName + " w/ " + damage + "ap.");
 
     // logic.check player health
     if (playerHealth <= 0) {
@@ -90,7 +98,7 @@ var startGame = function() {
 
       var pickedEnemyName = enemyNames[i];
       // reset.health
-      enemyHealth = Math.floor(Math.random() * 21) + 40;
+      enemyHealth = randomNumber(40, 60);
       console.log(pickedEnemyName + " has " + enemyHealth + "hp.");
 
       // passs pickedEnemyName variable's value into fight(). it assumes value of enemyName paramater
