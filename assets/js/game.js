@@ -124,25 +124,19 @@ var startGame = function() {
 };
 
 var shop = function() {
-  var shopOptionPrompt = window.prompt("REFILL hp, UPGRADE ap, or LEAVE?");
+  var shopOptionPrompt = window.prompt("1. REFILL hp, 2. UPGRADE ap, or 3. LEAVE?");
 
   // switch case. multiple choices
   switch (shopOptionPrompt) {
-    case "REFILL":
-    case "refill":
+    case 1:
       playerInfo.refillHealth();
       break;
-
-    case "UPGRADE": 
-    case "upgrade": 
+    case 2: 
       playerInfo.upgradeAttack();
       break;
-
-    case "LEAVE": 
-    case "leave":
+    case 3: 
       console.log("leaves store() via break.")
       break;
-
     default:
       console.log("pick valid option, try again.");
       shop();
