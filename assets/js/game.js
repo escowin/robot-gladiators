@@ -126,6 +126,8 @@ var startGame = function() {
 var shop = function() {
   var shopOptionPrompt = window.prompt("1. REFILL hp, 2. UPGRADE ap, or 3. LEAVE?");
 
+  // convert string input to integer
+  shopOptionPrompt = parseInt(shopOptionPrompt);
   // switch case. multiple choices
   switch (shopOptionPrompt) {
     case 1:
