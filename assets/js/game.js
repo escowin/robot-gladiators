@@ -133,9 +133,19 @@ var shop = function() {
 };
 
 // STATS
+var getPlayerName = function() {
+  var name = "";
+  while (name === "" || name === null) {
+    name = prompt("enter name")
+  };
+
+  console.log("your name is " + name);
+  return name;
+};
+
 var playerInfo = {
-  // name: window.prompt("enter your name"),
-  name: "Player",
+  name: getPlayerName(),
+  // name: "Player",
   health: 100,
   attack: 10,
   money: 10,
