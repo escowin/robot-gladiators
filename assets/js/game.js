@@ -6,25 +6,43 @@ var randomNumber = function(min, max) {
 };
 
 // GAME LOGIC
+var fightOrSkip = function() {
+  var promptFight = window.prompt("SKIP or FIGHT?");
+  // var promptFight = "FIGHT";
+
+  // if.invalid input, conditional recursion
+  if (promptFight === "" || promptFight === null) {
+    window.alert("enter valid response");
+    return fightOrSkip();
+  }
+
+  // convert user input to lowercase
+  promptFight = promptFight.toLowerCase();
+  // if.skip, confirm
+  if (promptFight === "skip") {
+    var confirmSkip = window.confirm("skip?");
+
+    // if.confirm, leave fight
+    if (confirmSkip) {
+      playerInfo.money = playerInfo.money - 10;
+      console.log(
+        "[ " + playerInfo.name + promptFight + " | (" + playerInfo.money + "g remaining). ]"
+      );
+
+      // return.true, if player leaves
+      return true;
+    }
+  }
+  return false;
+};
+
 var fight = function (enemy) {  
   // repeat while current enemy is alive
   while(playerInfo.health > 0 && enemy.health > 0) {
-    var promptFight = window.prompt("SKIP or FIGHT?");
-    // var promptFight = "FIGHT";
-
-    if (promptFight === "skip" || promptFight === "SKIP") {
-
-      var confirmSkip = window.confirm("skip?");
-
-      // if yes.subtract money, leave fight
-      if (confirmSkip) {
-        playerInfo.money = playerInfo.money - 10;
-        console.log("[ " + playerInfo.name + promptFight + " | (" + playerInfo.money + "g remaining). ]");
-        break;
-      }
+    if (fightOrSkip()) {
+      // if true, leave fight via break loop
+      break;
     }
-
-    console.log("[  " + playerInfo.name + " chooses to " + promptFight + "  ]");
 
     // logic.fight
     // logic.player attacks
@@ -132,7 +150,7 @@ var shop = function() {
   }
 };
 
-// STATS
+// GAME DATA
 var getPlayerName = function() {
   var name = "";
   while (name === "" || name === null) {
