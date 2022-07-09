@@ -1,110 +1,82 @@
 // redux | bonus.build out .html via js
-
-// user input
-// var playerName = window.prompt("enter bot name");
-var playerName = "Player";
-var playerHealth = 150;
-var playerAttack = 20;
-var playerMoney = 10;
-
-var enemyNames = ["Roborto", "Android Amy", "Robo Trumble"];
-var enemyHealth = 50;
-var enemyAttack = 10;
-
-
-// var wash = function(soapType) {
-//   console.log("I wash with " + soapType);
-//  };
-//  wash("water");
-// i wash with water
-
-// game states
-// WIN.player defeats all enemy bots
-//    - fights all enemies
-//    - defeats all enemies
-// LOSE.player hp is 0 or less
-
 var randomNumber = function(min, max) {
   var value = Math.floor(Math.random() * (max - min + 1) + min);
   
   return value;
 };
 
-var fight = function (enemyName) {  
+// GAME LOGIC
+var fight = function (enemy) {  
   // repeat while current enemy is alive
-  while(playerHealth > 0 && enemyHealth > 0) {
-    // choice.fight or skip?
+  while(playerInfo.health > 0 && enemy.health > 0) {
     var promptFight = window.prompt("SKIP or FIGHT?");
     // var promptFight = "FIGHT";
 
-    console.log("[  " + playerName + " chooses to " + promptFight + "  ]");
-    
-    // logic.skip
     if (promptFight === "skip" || promptFight === "SKIP") {
 
       var confirmSkip = window.confirm("skip?");
 
       // if yes.subtract money, leave fight
       if (confirmSkip) {
-        console.log("[ " + playerName + " skips round. ]")
-        playerMoney = playerMoney - 10;
-        console.log("[ " + playerName + " has " + playerMoney + "g remaining. ]");
+        playerInfo.money = playerInfo.money - 10;
+        console.log("[ " + playerInfo.name + promptFight + " | (" + playerInfo.money + "g remaining). ]");
         break;
       }
     }
 
+    console.log("[  " + playerInfo.name + " chooses to " + promptFight + "  ]");
+
     // logic.fight
     // logic.player attacks
-    var damage = randomNumber(playerAttack - 10, playerAttack);
+    var damage = randomNumber(playerInfo.attack - 10, playerInfo.attack);
 
-    enemyHealth = Math.max(0, enemyHealth - damage);
-
-    console.log(playerName + " attacks " + enemyName + " w/ " + damage + "ap.");
+    enemy.health = Math.max(0, enemy.health - damage);
+    console.log(playerInfo.name + " attacks " + enemy.name + " w/ " + damage + "ap.");
 
     // logic.check enemy health
-    if (enemyHealth <= 0) {
-      console.log(enemyName + " is dead (" + enemyHealth + "hp).");
+    if (enemy.health <= 0) {
+      console.log(enemy.name + " is dead (" + enemy.health + "hp).");
       break;
     } else {
-      console.log(enemyName + " has " + enemyHealth + "hp remaining.");
+      console.log(enemy.name + " has " + enemy.health + "hp remaining.");
     }
 
     // logic.enemy attacks
-    var damage = randomNumber(enemyAttack - 5, enemyAttack);
+    var damage = randomNumber(enemy.attack - 5, enemy.attack);
     
-    playerHealth = Math.max(0, playerHealth - damage);
+    playerInfo.health = Math.max(0, playerInfo.health - damage);
     
-    console.log(enemyName + " attacks " + playerName + " w/ " + damage + "ap.");
+    console.log(enemy.name + " attacks " + playerInfo.name + " w/ " + damage + "ap.");
 
     // logic.check player health
-    if (playerHealth <= 0) {
-      console.log(playerName + " is dead (" + playerHealth + "hp).");
+    if (playerInfo.health <= 0) {
+      console.log(playerInfo.name + " is dead (" + playerInfo.health + "hp).");
       break;
     } else {
-      console.log(playerName + " has " + playerHealth + "hp remaining.");
+      console.log(playerInfo.name + " has " + playerInfo.health + "hp remaining.");
     }
   }
 };
 
 var startGame = function() {
   // reset.player
-  playerHealth = 100;
-  playerAttack = 40;
-  playerMoney = 10;
+  playerInfo.reset();
+  console.log(playerInfo.reset);
 
-  for(var i = 0; i < enemyNames.length; i++) {
-    if (playerHealth > 0) {
+  // logic.loop through enemyInfo[].
+  for(var i = 0; i < enemyInfo.length; i++) {
+    if (playerInfo.health > 0) {
       console.log("====== ROBOT GLADIATORS ROUND " + (i + 1) + " =======");
 
-      var pickedEnemyName = enemyNames[i];
+      var pickedEnemyObj = enemyInfo[i];
       // reset.health
-      enemyHealth = randomNumber(40, 60);
-      console.log(pickedEnemyName + " has " + enemyHealth + "hp.");
+      pickedEnemyObj.health = randomNumber(40, 60);
+      console.log(pickedEnemyObj.name + " has " + pickedEnemyObj.health + "hp.");
 
-      // passs pickedEnemyName variable's value into fight(). it assumes value of enemyName paramater
-      fight(pickedEnemyName);
+      // passs enemy.name variable's value into fight(). it assumes value of enemy.name paramater
+      fight(pickedEnemyObj);
       // if health above 0 && not last [array] index
-      if (playerHealth > 0 && i < enemyNames.length - 1) {
+      if (playerInfo.health > 0 && i < enemyInfo.length - 1) {
         var storeConfirm = window.confirm("fight over, visit shop?")
         // if yes, invoke shop();
         if (storeConfirm) {
@@ -117,9 +89,9 @@ var startGame = function() {
     }
   }
   
-  // logic.loop(0hp || enemyNames[i]).ends, run endGame logic
-  if (playerHealth > 0) {
-    console.log("[  game won, score is " + playerMoney + " ]");
+  // logic.if loop(0hp || enemyNames[i]).ends, run endGame logic
+  if (playerInfo.health > 0) {
+    console.log("[  game won, score is " + playerInfo.money + " ]");
   } else {
     console.log("[  game over, you died. ]");
   }
@@ -138,44 +110,73 @@ var shop = function() {
 
   // switch case. multiple choices
   switch (shopOptionPrompt) {
-    // shopOptionPrompt.refill = increase hp, js math
     case "REFILL":
     case "refill":
-      if (playerMoney >= 7) {
-        console.log("refill, -7g | " + playerHealth + "hp + 20.");
-
-        playerHealth = playerHealth + 20;
-        playerMoney = Math.max(0, playerMoney - 10);
-      } else {
-        console.log("not enough g");
-      }
+      playerInfo.refillHealth();
       break;
 
-    // shopOptionPrompt.upgrade = increase ap, js math
     case "UPGRADE": 
     case "upgrade": 
-      if (playerMoney >= 7) {
-      console.log(
-        "UPGRADING " + playerMoney + "g -30g | " + playerAttack + "ap + 6."
-      );
-      playerAttack = playerAttack + 6;
-      playerMoney = playerMoney - 30;
-      } else {
-        console.log("not enough g");
-      }
+      playerInfo.upgradeAttack();
       break;
 
-    // shopOptionPrompt.leave = exit switch() via break;
     case "LEAVE": 
     case "leave":
       console.log("leaves store() via break.")
       break;
+
     default:
       console.log("pick valid option, try again.");
-      // calls shop(), repeating the cycle
       shop();
       break;
   }
 };
+
+// STATS
+var playerInfo = {
+  // name: window.prompt("enter your name"),
+  name: "Player",
+  health: 100,
+  attack: 10,
+  money: 10,
+  reset: function() {
+    this.health = 100;
+    this.attack = 10;
+    this.money = 10;
+  },
+  refillHealth: function() {
+    if (this.money >= 7) {
+      this.health += 20;
+      this.money -= 7;
+      console.log("| health refill | +" + this.health + "hp | -" + this.money + "g.");
+    } else {
+      console.log("| upgrade denied (not enough money) |");
+    }
+  },
+  upgradeAttack: function () {
+    if (this.money >= 7) {
+      this.attack += 6;
+      this.money -= 7;
+      console.log("| attack upgrade | +" + this.attack + "ap | -" + this.money + "g.");
+    } else {
+      console.log("| upgrade denied (not enough money) |");
+    }
+  }
+};
+
+var enemyInfo = [
+  {
+    name: "Bender",
+    attack: randomNumber(10, 20)
+  },
+  {
+    name: "Calculon",
+    attack: randomNumber(8, 30)
+  },
+  {
+    name: "Femputor",
+    attack: randomNumber(10, 100)
+  }
+];
 
 startGame();
