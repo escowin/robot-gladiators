@@ -37,8 +37,28 @@ var fightOrSkip = function() {
 };
 
 var fight = function (enemy) {  
+  // randomize fight order, player v cpu
+  var isPlayerTurn = true;
+  if (Math.random() > 0.5) {
+    isPlayerTurn = false;
+  }
+
   // repeat while current enemy is alive
   while(playerInfo.health > 0 && enemy.health > 0) {
+    // randomize enemyInfo[i]
+    // if cpu turn:
+    // - window.prompt fight || skip
+    // - remove damage from cpu hp
+    // check if cpu has enough hp to continue
+
+    // if player turn:
+    // - remove damage from player hp
+    // - check if player has enough hp to conitnue
+
+    // after turn, switch turn for next fighting round:
+    // - if player was first, run logic (cpu attack player)
+    // - if cpu was first, run logic (player attack cpu)
+
     if (fightOrSkip()) {
       // if true, leave fight via break loop
       break;
