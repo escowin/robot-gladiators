@@ -39,6 +39,7 @@ var fightOrSkip = function() {
 var fight = function (enemy) {  
   // randomize fight order, player v cpu
   var isPlayerTurn = true;
+
   if (Math.random() > 0.5) {
     isPlayerTurn = false;
   }
@@ -97,47 +98,63 @@ var fight = function (enemy) {
 var startGame = function() {
   // reset.player
   playerInfo.reset();
-  console.log(playerInfo.reset);
-
   // logic.loop through enemyInfo[].
   for(var i = 0; i < enemyInfo.length; i++) {
+    console.log(playerInfo);
+
     if (playerInfo.health > 0) {
       console.log("====== ROBOT GLADIATORS ROUND " + (i + 1) + " =======");
 
       var pickedEnemyObj = enemyInfo[i];
       // reset.health
       pickedEnemyObj.health = randomNumber(40, 60);
-      console.log(pickedEnemyObj.name + " has " + pickedEnemyObj.health + "hp.");
+      console.log(pickedEnemyObj);
 
       // passs enemy.name variable's value into fight(). it assumes value of enemy.name paramater
       fight(pickedEnemyObj);
       // if health above 0 && not last [array] index
       if (playerInfo.health > 0 && i < enemyInfo.length - 1) {
-        var storeConfirm = window.confirm("fight over, visit shop?")
+        var storeConfirm = window.confirm("fight over, visit shop?");
         // if yes, invoke shop();
         if (storeConfirm) {
           shop();
         }
       }
     } else {
-      console.log("[  game over, you died ]");
+      console.log("[  game over, you died. ]");
       break;
     }
   }
-  
-  // logic.if loop(0hp || enemyNames[i]).ends, run endGame logic
-  if (playerInfo.health > 0) {
-    console.log("[  game won, score is " + playerInfo.money + " ]");
-  } else {
-    console.log("[  game over, you died. ]");
+
+  // after loop ends, player.health =< 0 || completed loop of enemyInfo[i]
+  endGame();
+};
+
+var endGame = function() {
+  console.log("game over. checking score");
+
+  // highscore.check localStorage, if nonexistant use 0
+  var highScore = localStorage.getItem("highscore");
+  if (highScore === null) {
+    highScore = 0;
   }
 
-  var playAgainConfirm = window.confirm("play again?");
+  // if player has more money than current high score, player money sets new highScore
+  if (playerInfo.money > highScore) {
+    localStorage.setItem("highscore", playerInfo.money);
+    localStorage.setItem("name", playerInfo.name);
+    
+    console.log(playerInfo.name + " sets new high score of " + playerInfo.money + ".");
+  } else {
+    console.log(playerInfo.name + " did not topple the current high score of " + highScore + ".")
+  }
 
-  if  (playAgainConfirm) {
+  // logic.replay
+  var playAgainConfirm = window.confirm("play again?");
+  if (playAgainConfirm) {
     startGame();
   } else {
-    console.log("[[ game end  ]]");
+    console.log("[  game fin. ]");
   }
 };
 
@@ -164,7 +181,7 @@ var shop = function() {
   }
 };
 
-// GAME DATA
+// DATA USER-INPUT
 var getPlayerName = function() {
   var name = "";
   while (name === "" || name === null) {
@@ -175,15 +192,16 @@ var getPlayerName = function() {
   return name;
 };
 
+// DATA GAME INFO
 var playerInfo = {
   name: getPlayerName(),
   // name: "Player",
   health: 100,
-  attack: 10,
+  attack: 25,
   money: 10,
   reset: function() {
     this.health = 100;
-    this.attack = 10;
+    this.attack = 25;
     this.money = 10;
   },
   refillHealth: function() {
@@ -221,4 +239,5 @@ var enemyInfo = [
   }
 ];
 
+// RUN GAME
 startGame();
