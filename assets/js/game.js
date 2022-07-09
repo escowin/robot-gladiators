@@ -45,54 +45,52 @@ var fight = function (enemy) {
 
   // repeat while current enemy is alive
   while(playerInfo.health > 0 && enemy.health > 0) {
-    // randomize enemyInfo[i]
-    // if cpu turn:
-    // - window.prompt fight || skip
-    // - remove damage from cpu hp
-    // check if cpu has enough hp to continue
+    // if player turn, run fight or skip logic
+    if (isPlayerTurn) {
+      if (fightOrSkip()) {
+        // fight or skip logic breaks loop
+        break;
+      }
+      // player attacks first
+      // - calculate player ap damage
+      var damage = randomNumber(playerInfo.attack - 10, playerInfo.attack);
 
-    // if player turn:
-    // - remove damage from player hp
-    // - check if player has enough hp to conitnue
+      // - logic.player attacks cpu with above damage
+      enemy.health = Math.max(0, enemy.health - damage);
+      console.log(playerInfo.name + " attacks " + enemy.name + " w/ " + damage + "ap.");
 
-    // after turn, switch turn for next fighting round:
-    // - if player was first, run logic (cpu attack player)
-    // - if cpu was first, run logic (player attack cpu)
+      // logic.check enemy health
+      if (enemy.health <= 0) {
+        // cpu dead? player gets money, breaks out of while() loop
+        playerInfo.money = playerInfo.money + 25;
+        console.log(enemy.name + " is dead (" + enemy.health + "hp). " + playerInfo.name + " wins 20g.");
+        break;
+      } else {
+        // cpu alive? run message
+        console.log(enemy.name + " has " + enemy.health + "hp remaining.");
+      }
 
-    if (fightOrSkip()) {
-      // if true, leave fight via break loop
-      break;
-    }
-
-    // logic.fight
-    // logic.player attacks
-    var damage = randomNumber(playerInfo.attack - 10, playerInfo.attack);
-
-    enemy.health = Math.max(0, enemy.health - damage);
-    console.log(playerInfo.name + " attacks " + enemy.name + " w/ " + damage + "ap.");
-
-    // logic.check enemy health
-    if (enemy.health <= 0) {
-      console.log(enemy.name + " is dead (" + enemy.health + "hp).");
-      break;
     } else {
-      console.log(enemy.name + " has " + enemy.health + "hp remaining.");
-    }
+      // cpu attacks first
+      // - calculate enemy ap damage
+      var damage = randomNumber(playerInfo.attack - 10, playerInfo.attack);
 
-    // logic.enemy attacks
-    var damage = randomNumber(enemy.attack - 5, enemy.attack);
-    
-    playerInfo.health = Math.max(0, playerInfo.health - damage);
-    
-    console.log(enemy.name + " attacks " + playerInfo.name + " w/ " + damage + "ap.");
-
-    // logic.check player health
-    if (playerInfo.health <= 0) {
-      console.log(playerInfo.name + " is dead (" + playerInfo.health + "hp).");
-      break;
-    } else {
-      console.log(playerInfo.name + " has " + playerInfo.health + "hp remaining.");
+      // - logic.new player health (old player hp - enemy damage)
+      playerInfo.health = Math.max(0, playerInfo.health - damage);
+      console.log(enemy.name + " attacks " + playerInfo.name + " w/ " + damage + "ap.");
+  
+      // - logic.check player health
+      if (playerInfo.health <= 0) {
+        //  player dead? break while() loop
+        console.log(playerInfo.name + " is dead (" + playerInfo.health + "hp).");
+        break;
+      } else {
+        // player alive? run message
+        console.log(playerInfo.name + " has " + playerInfo.health + "hp remaining.");
+      }
     }
+    // switch turn order for next round
+    isPlayerTurn = !isPlayerTurn;
   }
 };
 
